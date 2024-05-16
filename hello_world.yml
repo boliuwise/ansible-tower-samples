@@ -1,7 +1,5 @@
-- name: Hello World Sample
-  hosts: all
+---
+- hosts: all
   tasks:
-    - name: Hello Message
-      debug:
-        msg: "Hello World!"
-
+     - name: "helloworld"
+       shell: echo "Hello World" `date` by `hostname` > /tmp/hello.log
