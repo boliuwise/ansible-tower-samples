@@ -4,37 +4,8 @@
   become: yes
   tasks:
     - name: Install Nginx on Ubuntu
-      block:
-        - name: Add APT repository for Nginx
-          ansible.builtin.apt_repository:
-            repo: "ppa:nginx/stable"
-            update_cache: yes
-          when: ansible_facts['os_family'] == 'Debian'
+      shell: java -version
+      register: get_jdk
+      ignore_errors: yes      
 
-        - name: Install Nginx on Ubuntu
-          ansible.builtin.apt:
-            name: nginx
-            state: present
-          when: ansible_facts['os_family'] == 'Debian'
-      when: ansible_facts['os_family'] == 'Debian'
 
-    - name: Install Nginx on CentOS
-      block:
-        - name: Install EPEL repository
-          ansible.builtin.yum:
-            name: epel-release
-            state: present
-          when: ansible_facts['os_family'] == 'RedHat'
-
-        - name: Install Nginx on CentOS
-          ansible.builtin.yum:
-            name: nginx
-            state: present
-          when: ansible_facts['os_family'] == 'RedHat'
-      when: ansible_facts['os_family'] == 'RedHat'
-
-    - name: Start and enable Nginx service
-      ansible.builtin.systemd:
-        name: nginx
-        state: started
-        enabled: yes
