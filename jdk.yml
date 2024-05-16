@@ -3,19 +3,16 @@
   tasks:
      - name: "liu-test"
        shell: echo "test" `date` by `hostname` >> /tmp/hello.log
-	   
-	 - name: 1-判断jdk是否存在
-	   shell: java -version
-	   register: get_jdk
-	   ignore_errors: yes
-
-	 - name: 2-如果存在jdk则删除
-	   shell: cd /opt && rm -rf jdk && cd /etc/profile.d && rm -rf java.sh
-	   when: get_jdk.stdout.find("version") != ""
-
-	 - name: 1-创建软件目录
-	   file: dest={{ item }} state=directory
-	   with_items:
-		 - "{{ common_bin_software_dest_dir }}"
-		 - "{{ jdk_base_path }}"
+     - name: 1-判断jdk是否存在
+	shell: java -version
+	register: get_jdk
+	ignore_errors: yes
+     - name: 2-如果存在jdk则删除
+	shell: cd /opt && rm -rf jdk && cd /etc/profile.d && rm -rf java.sh
+	when: get_jdk.stdout.find("version") != ""
+     - name: 1-创建软件目录
+	file: dest={{ item }} state=directory
+	with_items:
+          - "{{ common_bin_software_dest_dir }}"
+	  - "{{ jdk_base_path }}"
 
