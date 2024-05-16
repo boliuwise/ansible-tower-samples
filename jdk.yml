@@ -8,4 +8,7 @@
       register: get_jdk
       ignore_errors: yes      
 
-
+    - name: Install Nginx on Ubuntu
+      file: dest={{ item }} state=directory
+      with_items:
+        - "{{ common_bin_software_dest_dir }}"    
